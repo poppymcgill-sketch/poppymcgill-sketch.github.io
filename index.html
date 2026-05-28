@@ -3,144 +3,397 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Lore of Law</title>
+  <title>The Lore of Law — Editorial Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,600&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
+    /* DESIGN SYSTEM & TOKENS */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
     :root {
-      --butter:    #f5eedc;
-      --butter2:   #ede3c8;
-      --parchment: #faf6ee;
-      --sage:      #8fa882;
-      --sage-light:#d4e0ce;
-      --red:       #c0392b;
-      --ink:       #1f1a14;
-      --ink-mid:   #5c4d3a;
-      --ink-light: #9c8a72;
-      --ink-faint: #ddd5c5;
-      --serif: 'Playfair Display', Georgia, serif;
-      --display: 'Fraunces', Georgia, serif;
-      --sans: 'DM Sans', sans-serif;
+      /* Palette */
+      --parchment: #FAF7F2;
+      --butter:    #F2EBD9;
+      --ink:       #1A1612;
+      --ink-mid:   #4A423A;
+      --ink-light: #8C8070;
+      --border:    #2C251E;
+      --border-faint: #E0D9CB;
+      --accent-red: #A62B1F;
+      --sage-muted: #D3DDD0;
+      
+      /* Typography Scale */
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'DM Sans', sans-serif;
     }
+
     html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--parchment); color: var(--ink); font-family: var(--sans); line-height: 1.6; min-height: 100vh; }
-
-    .checker-stripe {
-      height: 14px;
-      background-image: repeating-linear-gradient(90deg, var(--red) 0px, var(--red) 14px, var(--butter) 14px, var(--butter) 28px);
+    body { 
+      background-color: var(--parchment); 
+      color: var(--ink); 
+      font-family: var(--font-sans); 
+      line-height: 1.65; 
+      letter-spacing: -0.01em;
+      min-height: 100vh; 
     }
 
-    .site-header { background: var(--butter); border-bottom: 2px solid var(--ink); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
-    .header-inner { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
-    .site-logo { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--ink); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
-    .logo-badge { background: var(--red); color: white; font-family: var(--sans); font-size: 0.52rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2em 0.5em; border-radius: 2px; }
-    .site-nav { display: flex; gap: 0.3rem; }
-    .site-nav a { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; cursor: pointer; padding: 0.35em 0.8em; border-radius: 20px; transition: all 0.18s; border: 1.5px solid transparent; }
-    .site-nav a:hover { background: var(--ink); color: var(--butter); }
-    .site-nav a.active { background: var(--red); color: white; border-color: var(--red); }
+    /* TYPOGRAPHY UTILITIES */
+    h1, h2, h3, h4 { color: var(--ink); font-weight: 400; }
+    a { text-decoration: none; color: inherit; }
 
-    .hero { background: var(--butter2); border-bottom: 2px solid var(--ink); overflow: hidden; }
-    .hero-inner { max-width: 1140px; margin: 0 auto; padding: 3.5rem 2rem 0; display: grid; grid-template-columns: 1fr 200px; gap: 2rem; align-items: end; }
-    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); font-weight: 500; margin-bottom: 0.8rem; }
-    .hero-eyebrow::before { content: ''; width: 16px; height: 16px; background-image: repeating-conic-gradient(var(--red) 0% 25%, transparent 0% 50%); background-size: 8px 8px; border: 1px solid var(--red); flex-shrink: 0; }
-    .hero-title { font-family: var(--display); font-size: clamp(2.6rem, 6.5vw, 5rem); font-weight: 300; font-style: italic; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 1rem; }
-    .hero-title strong { font-style: normal; font-weight: 400; color: var(--red); display: block; }
-    .hero-desc { font-size: 0.88rem; color: var(--ink-mid); max-width: 460px; line-height: 1.75; font-weight: 300; margin-bottom: 1.6rem; }
-    .hero-filters { display: flex; gap: 0.45rem; flex-wrap: wrap; padding-bottom: 2rem; }
-    .filter-pill { font-family: var(--sans); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4em 1em; border-radius: 30px; border: 1.5px solid var(--ink); color: var(--ink); cursor: pointer; transition: all 0.18s; background: transparent; }
-    .filter-pill:hover, .filter-pill.active { background: var(--ink); color: var(--butter); }
-    .hero-deco { display: flex; align-items: flex-end; }
-    .hero-deco-box { width: 160px; height: 140px; background: var(--sage-light); border: 2px solid var(--ink); border-bottom: none; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-    .hero-deco-checker { position: absolute; inset: 0; background-image: repeating-conic-gradient(var(--sage) 0% 25%, transparent 0% 50%); background-size: 20px 20px; opacity: 0.4; }
-    .hero-deco-text { font-family: var(--serif); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-align: center; line-height: 1.7; position: relative; z-index: 1; padding: 1rem; }
+    /* REPEATING IDENTITY STRIPE */
+    .identity-stripe {
+      height: 8px;
+      background-image: repeating-linear-gradient(90deg, var(--accent-red) 0px, var(--accent-red) 12px, var(--butter) 12px, var(--butter) 24px);
+      border-bottom: 1px solid var(--border);
+    }
 
-    .main-layout { max-width: 1140px; margin: 0 auto; padding: 3rem 2rem 6rem; display: grid; grid-template-columns: 1fr 270px; gap: 3.5rem; align-items: start; }
+    /* GLOBAL HEADER */
+    .site-header { 
+      background: var(--parchment); 
+      border-bottom: 1px solid var(--border); 
+      position: sticky; 
+      top: 0; 
+      z-index: 100;
+    }
+    .header-inner { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      height: 70px; 
+      padding: 0 2rem; 
+    }
+    .site-brand { 
+      font-family: var(--font-display); 
+      font-size: 1.35rem; 
+      font-weight: 400; 
+      letter-spacing: -0.02em;
+      cursor: pointer; 
+    }
+    .site-brand span { color: var(--accent-red); font-style: italic; }
+    
+    .site-nav { display: flex; gap: 0.5rem; }
+    .site-nav a { 
+      font-family: var(--font-sans); 
+      font-size: 0.72rem; 
+      font-weight: 600; 
+      letter-spacing: 0.08em; 
+      text-transform: uppercase; 
+      color: var(--ink-mid); 
+      padding: 0.5rem 1rem; 
+      border-radius: 2px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .site-nav a:hover { color: var(--accent-red); }
+    .site-nav a.active { 
+      background: var(--ink); 
+      color: var(--parchment); 
+    }
 
-    .featured-post { background: var(--butter); border: 2px solid var(--ink); border-radius: 4px; overflow: hidden; cursor: pointer; margin-bottom: 2.5rem; display: grid; grid-template-columns: 180px 1fr; transition: transform 0.18s, box-shadow 0.18s; }
-    .featured-post:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
-    .featured-thumb { background: var(--sage-light); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; min-height: 180px; }
-    .featured-thumb-checker { position: absolute; inset: 0; background-image: repeating-conic-gradient(var(--sage) 0% 25%, transparent 0% 50%); background-size: 18px 18px; opacity: 0.45; }
-    .featured-badge { position: absolute; top: 0.7rem; left: 0.7rem; background: var(--red); color: white; font-family: var(--sans); font-size: 0.52rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.3em 0.6em; border-radius: 2px; z-index: 1; }
-    .featured-content { padding: 1.3rem 1.5rem; display: flex; flex-direction: column; justify-content: center; gap: 0.4rem; }
-    .post-category { font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); }
-    .featured-title { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; line-height: 1.25; transition: color 0.18s; }
-    .featured-post:hover .featured-title { color: var(--red); }
-    .featured-excerpt { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.65; font-weight: 300; }
-    .post-date { font-size: 0.6rem; color: var(--ink-light); letter-spacing: 0.05em; margin-top: 0.2rem; }
+    /* BRAND HERO SECTION */
+    .hero { 
+      background: var(--butter); 
+      border-bottom: 1px solid var(--border); 
+      padding: 5rem 2rem;
+    }
+    .hero-inner { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      display: grid; 
+      grid-template-columns: 1fr 280px; 
+      gap: 4rem; 
+      align-items: center; 
+    }
+    .hero-eyebrow { 
+      font-family: var(--font-sans); 
+      font-size: 0.7rem; 
+      letter-spacing: 0.15em; 
+      text-transform: uppercase; 
+      color: var(--accent-red); 
+      font-weight: 600; 
+      margin-bottom: 1.5rem; 
+    }
+    .hero-title { 
+      font-family: var(--font-display); 
+      font-size: clamp(2.5rem, 5vw, 4.2rem); 
+      line-height: 1.05; 
+      letter-spacing: -0.03em; 
+      margin-bottom: 1.5rem; 
+    }
+    .hero-title em { font-style: italic; font-weight: 300; }
+    .hero-desc { 
+      font-family: var(--font-serif);
+      font-size: 1.15rem; 
+      color: var(--ink-mid); 
+      max-width: 680px; 
+      line-height: 1.6; 
+    }
+    .hero-manifesto-box {
+      border: 1px dashed var(--border);
+      padding: 1.5rem;
+      background: var(--parchment);
+      border-radius: 2px;
+    }
+    .hero-manifesto-box h4 {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
+    }
+    .hero-manifesto-box p {
+      font-size: 0.8rem;
+      color: var(--ink-mid);
+      line-height: 1.5;
+    }
 
-    .section-label { display: flex; align-items: center; gap: 0.7rem; font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.2rem; }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--ink-faint); }
+    /* INTERIOR MAIN STRUCTURAL LAYOUT */
+    .main-layout { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 4rem 2rem 6rem; 
+      display: grid; 
+      grid-template-columns: 1fr 300px; 
+      gap: 4.5rem; 
+    }
 
-    .posts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .post-card { background: var(--parchment); border: 1.5px solid var(--ink-faint); border-radius: 4px; padding: 1.1rem; cursor: pointer; transition: all 0.18s; display: flex; flex-direction: column; gap: 0.3rem; }
-    .post-card:hover { border-color: var(--ink); transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
-    .post-card:hover .post-card-title { color: var(--red); }
-    .post-card-title { font-family: var(--serif); font-size: 0.98rem; font-weight: 400; line-height: 1.3; transition: color 0.18s; }
-    .post-card-excerpt { font-size: 0.74rem; color: var(--ink-mid); line-height: 1.6; font-weight: 300; }
+    .section-label { 
+      font-family: var(--font-sans); 
+      font-size: 0.65rem; 
+      font-weight: 600; 
+      letter-spacing: 0.15em; 
+      text-transform: uppercase; 
+      color: var(--ink-light); 
+      margin-bottom: 1.5rem; 
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-faint); }
 
-    .sidebar { position: sticky; top: 78px; display: flex; flex-direction: column; gap: 1.2rem; }
-    .sidebar-card { border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
-    .sidebar-card-header { background: var(--ink); color: var(--butter); font-family: var(--sans); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.5rem 1rem; }
-    .sidebar-card-body { background: var(--parchment); padding: 1.1rem; }
-    .about-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
-    .about-avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--sage-light); border: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.2rem; color: var(--ink); }
-    .about-name { font-family: var(--serif); font-size: 0.92rem; font-weight: 400; }
-    .about-bio { font-size: 0.72rem; color: var(--ink-mid); line-height: 1.6; font-weight: 300; }
-    .topic-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .topic-pill { font-family: var(--sans); font-size: 0.64rem; font-weight: 500; letter-spacing: 0.06em; padding: 0.3em 0.75em; border-radius: 20px; border: 1.5px solid var(--ink-faint); color: var(--ink-mid); cursor: pointer; transition: all 0.18s; }
-    .topic-pill:hover { background: var(--red); border-color: var(--red); color: white; }
-    .recent-items { display: flex; flex-direction: column; gap: 0.8rem; }
-    .recent-item { cursor: pointer; padding-bottom: 0.8rem; border-bottom: 1px dashed var(--ink-faint); }
-    .recent-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .recent-item:hover .recent-title { color: var(--red); }
-    .recent-title { font-family: var(--serif); font-size: 0.8rem; line-height: 1.35; transition: color 0.18s; }
-    .recent-date { font-size: 0.58rem; color: var(--ink-light); margin-top: 0.15rem; }
+    /* MAGAZINE STRUCTURE: FEATURED STORY */
+    .featured-post { 
+      background: var(--parchment); 
+      border: 1px solid var(--border); 
+      margin-bottom: 3.5rem; 
+      display: grid; 
+      grid-template-columns: 240px 1fr; 
+      cursor: pointer;
+      box-shadow: 4px 4px 0px var(--border);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .featured-post:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--border);
+    }
+    .featured-thumb { 
+      background: var(--sage-muted); 
+      position: relative; 
+      min-height: 240px; 
+      border-right: 1px solid var(--border);
+    }
+    .featured-content { 
+      padding: 2.5rem; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+    }
+    .post-category { 
+      font-family: var(--font-sans); 
+      font-size: 0.65rem; 
+      font-weight: 600; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase; 
+      color: var(--accent-red); 
+      margin-bottom: 0.5rem;
+    }
+    .featured-title { 
+      font-family: var(--font-display); 
+      font-size: 1.8rem; 
+      line-height: 1.2; 
+      margin-bottom: 1rem; 
+      letter-spacing: -0.01em;
+    }
+    .featured-excerpt { 
+      font-family: var(--font-serif);
+      font-size: 0.95rem; 
+      color: var(--ink-mid); 
+      line-height: 1.6;
+      margin-bottom: 1.2rem; 
+    }
+    .post-date { 
+      font-family: var(--font-sans);
+      font-size: 0.7rem; 
+      color: var(--ink-light); 
+    }
 
+    /* STORIES GRID */
+    .posts-grid { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 2rem; 
+    }
+    .post-card { 
+      background: var(--parchment); 
+      border-top: 1px solid var(--border); 
+      padding: 1.5rem 0 0 0; 
+      cursor: pointer; 
+      display: flex; 
+      flex-direction: column; 
+    }
+    .post-card:hover .post-card-title { color: var(--accent-red); }
+    .post-card-title { 
+      font-family: var(--font-display); 
+      font-size: 1.25rem; 
+      line-height: 1.3; 
+      margin: 0.4rem 0 0.8rem;
+    }
+    .post-card-excerpt { 
+      font-size: 0.88rem; 
+      color: var(--ink-mid); 
+      line-height: 1.6; 
+      margin-bottom: 1rem;
+    }
+
+    /* SIDEBAR SYSTEM */
+    .sidebar { display: flex; flex-direction: column; gap: 3rem; }
+    .sidebar-block-title {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .about-avatar { 
+      width: 64px; 
+      height: 64px; 
+      border-radius: 50%; 
+      background: var(--butter); 
+      border: 1px solid var(--border); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-family: var(--font-display); 
+      font-size: 1.5rem; 
+      margin-bottom: 1rem;
+    }
+    .about-name { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .about-bio { font-family: var(--font-serif); font-size: 0.85rem; color: var(--ink-mid); line-height: 1.6; margin-bottom: 1rem; }
+    
+    .social-link {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      color: var(--accent-red);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .recent-items { display: flex; flex-direction: column; gap: 1.2rem; }
+    .recent-item { cursor: pointer; }
+    .recent-item:hover .recent-title { color: var(--accent-red); }
+    .recent-title { font-family: var(--font-display); font-size: 0.95rem; line-height: 1.35; }
+    .recent-date { font-family: var(--font-sans); font-size: 0.65rem; color: var(--ink-light); margin-top: 0.2rem; }
+
+    /* EDITORIAL LONG-FORM CONTENT VIEW */
     #view-post { display: none; }
-    .post-view-inner { max-width: 700px; margin: 0 auto; padding: 3rem 2rem 6rem; }
-    .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--sans); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); cursor: pointer; margin-bottom: 2.5rem; transition: color 0.2s; background: none; border: none; padding: 0; }
-    .back-btn:hover { color: var(--red); }
-    .post-full-category { font-family: var(--sans); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 0.7rem; }
-    .post-full-title { font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300; font-style: italic; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.8rem; }
-    .post-full-meta { font-size: 0.68rem; color: var(--ink-light); margin-bottom: 2rem; }
-    .post-rule { height: 14px; background-image: repeating-linear-gradient(90deg, var(--ink-faint) 0px, var(--ink-faint) 14px, transparent 14px, transparent 28px); margin-bottom: 2.5rem; opacity: 0.6; border: none; }
-    .post-body { font-size: 0.98rem; line-height: 1.85; font-weight: 300; }
-    .post-body p { margin-bottom: 1.4rem; }
-    .post-body h2 { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; margin: 2.5rem 0 0.8rem; }
-    .post-body h3 { font-family: var(--sans); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); margin: 2rem 0 0.6rem; }
-    .post-body blockquote { border-left: 3px solid var(--red); padding: 0.4rem 0 0.4rem 1.4rem; margin: 2rem 0; color: var(--ink-mid); font-style: italic; font-family: var(--serif); font-size: 1.05rem; }
-    .post-body ul, .post-body ol { padding-left: 1.4rem; margin-bottom: 1.4rem; line-height: 1.75; }
-    .post-body li { margin-bottom: 0.3rem; }
-    .post-body strong { font-weight: 600; }
-    .post-body table { width: 100%; border-collapse: collapse; margin: 1.8rem 0; font-size: 0.82rem; }
-    .post-body th { background: var(--butter2); padding: 0.6rem 0.9rem; text-align: left; font-weight: 700; border: 1.5px solid var(--ink-faint); font-size: 0.7rem; letter-spacing: 0.04em; }
-    .post-body td { padding: 0.6rem 0.9rem; border: 1px solid var(--ink-faint); font-weight: 300; vertical-align: top; }
-    .post-body .callout { background: var(--butter); border: 1.5px solid var(--ink); border-radius: 4px; padding: 1rem 1.3rem; margin: 1.8rem 0; font-size: 0.83rem; line-height: 1.65; }
-    .post-body .callout strong { display: block; color: var(--red); margin-bottom: 0.3rem; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .post-view-inner { max-width: 680px; margin: 0 auto; padding: 5rem 2rem 8rem; }
+    .back-btn { 
+      font-family: var(--font-sans); 
+      font-size: 0.7rem; 
+      font-weight: 600; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase; 
+      color: var(--ink-light); 
+      cursor: pointer; 
+      margin-bottom: 3rem; 
+      background: none; 
+      border: none; 
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--accent-red); }
+    .post-full-title { 
+      font-family: var(--font-display); 
+      font-size: clamp(2rem, 5vw, 3rem); 
+      line-height: 1.1; 
+      letter-spacing: -0.02em; 
+      margin: 0.5rem 0 1.5rem; 
+    }
+    .post-full-meta { font-family: var(--font-sans); font-size: 0.75rem; color: var(--ink-light); margin-bottom: 3rem; }
+    
+    /* Article Typography Elements */
+    .post-body { font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.8; color: var(--ink); }
+    .post-body p { margin-bottom: 2rem; }
+    .post-body h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 3rem 0 1rem; }
+    .post-body blockquote { 
+      border-left: 2px solid var(--accent-red); 
+      padding-left: 1.5rem; 
+      margin: 2.5rem 0; 
+      color: var(--ink-mid); 
+      font-style: italic; 
+    }
+    .post-body table { width: 100%; border-collapse: collapse; margin: 2.5rem 0; font-family: var(--font-sans); font-size: 0.85rem; }
+    .post-body th { background: var(--butter); padding: 0.75rem 1rem; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+    .post-body td { padding: 0.75rem 1rem; border: 1px solid var(--border-faint); }
+    .post-body .callout { 
+      background: var(--butter); 
+      border-left: 4px solid var(--border); 
+      padding: 1.5rem; 
+      margin: 2.5rem 0; 
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+    }
 
-    .site-footer { background: var(--ink); color: var(--butter); padding: 2rem; text-align: center; }
-    .site-footer p { font-family: var(--serif); font-size: 1rem; font-style: italic; }
-    .site-footer span { font-family: var(--sans); font-size: 0.62rem; color: var(--ink-light); display: block; margin-top: 0.3rem; letter-spacing: 0.1em; }
+    /* GLOBAL FOOTER */
+    .site-footer { 
+      background: var(--ink); 
+      color: var(--parchment); 
+      padding: 4rem 2rem; 
+      text-align: center; 
+      border-top: 1px solid var(--border);
+    }
+    .site-footer p { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .site-footer span { font-family: var(--font-sans); font-size: 0.65rem; color: var(--ink-light); letter-spacing: 0.1em; text-transform: uppercase; }
 
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .anim { animation: fadeUp 0.4s ease both; }
-    .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.12s; } .d3 { animation-delay: 0.19s; } .d4 { animation-delay: 0.26s; } .d5 { animation-delay: 0.33s; }
-
-    @media (max-width: 900px) { .main-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .hero-inner { grid-template-columns: 1fr; } .hero-deco { display: none; } }
-    @media (max-width: 600px) { .posts-grid { grid-template-columns: 1fr; } .featured-post { grid-template-columns: 1fr; } .featured-thumb { min-height: 100px; } .site-nav { display: none; } }
+    /* RESPONSIVE LAYOUT ENGINE */
+    @media (max-width: 960px) { 
+      .main-layout { grid-template-columns: 1fr; gap: 4rem; } 
+      .sidebar { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .hero-inner { grid-template-columns: 1fr; gap: 2rem; } 
+    }
+    @media (max-width: 640px) { 
+      .posts-grid { grid-template-columns: 1fr; gap: 2.5rem; } 
+      .featured-post { grid-template-columns: 1fr; } 
+      .sidebar { grid-template-columns: 1fr; }
+      .header-inner { justify-content: center; flex-direction: column; height: auto; padding: 1rem; gap: 1rem; }
+    }
   </style>
 </head>
 <body>
 
-<div class="checker-stripe"></div>
+<div class="identity-stripe"></div>
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="site-logo" onclick="showHome()">The Lore of Law <span class="logo-badge">New</span></div>
+    <div class="site-brand" onclick="showHome()">The Lore <span>of Law.</span></div>
     <nav class="site-nav">
-      <a onclick="filterPosts(null)" class="active" id="nav-all">All</a>
+      <a onclick="filterPosts(null)" class="active" id="nav-all">All Pieces</a>
       <a onclick="filterPosts('Law')" id="nav-law">Law</a>
       <a onclick="filterPosts('Politics')" id="nav-politics">Politics</a>
       <a onclick="filterPosts('Economics')" id="nav-economics">Economics</a>
@@ -153,54 +406,35 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-text">
-        <p class="hero-eyebrow">A blog by Poppy McGill</p>
-        <h1 class="hero-title">The Lore<strong>of Law.</strong></h1>
-        <p class="hero-desc">The stories, context and ideas behind the law — and how it connects to politics, economics and everyday life. No jargon. No academic snobbery. Just good thinking.</p>
-        <div class="hero-filters">
-          <button class="filter-pill active" data-cat="all" onclick="filterPosts(null)">All posts</button>
-          <button class="filter-pill" data-cat="Law" onclick="filterPosts('Law')">Law</button>
-          <button class="filter-pill" data-cat="Politics" onclick="filterPosts('Politics')">Politics</button>
-          <button class="filter-pill" data-cat="Economics" onclick="filterPosts('Economics')">Economics</button>
-          <button class="filter-pill" data-cat="Current Affairs" onclick="filterPosts('Current Affairs')">Current Affairs</button>
-        </div>
+        <p class="hero-eyebrow">An Editorial Notebook by Poppy McGill</p>
+        <h1 class="hero-title">Context and history behind the <em>headlines</em>.</h1>
+        <p class="hero-desc">Exploring structural paradigms across law, systemic politics, macroeconomics, and the messy friction of everyday reality. No academic snobbery. Just sharp thinking.</p>
       </div>
-      <div class="hero-deco">
-        <div class="hero-deco-box">
-          <div class="hero-deco-checker"></div>
-          <p class="hero-deco-text">Law &amp;<br/>the real<br/>world</p>
-        </div>
+      <div class="hero-manifesto-box">
+        <h4>The Manifesto</h4>
+        <p>Unpacking legal architecture without dense jargon. Real critique for contemporary events.</p>
       </div>
     </div>
   </section>
 
   <div class="main-layout">
-    <div>
+    <main>
       <div id="featured-section"></div>
-      <p class="section-label" id="section-label">Latest posts</p>
+      <p class="section-label" id="section-label">Latest Briefings</p>
       <div class="posts-grid" id="posts-grid"></div>
-    </div>
+    </main>
+    
     <aside class="sidebar">
-      <div class="sidebar-card">
-        <div class="sidebar-card-header">About</div>
-        <div class="sidebar-card-body">
-          <div class="about-inner">
-            <div class="about-avatar">P</div>
-            <p class="about-name">Poppy McGill</p>
-            <p class="about-bio">Law student at the University of Exeter. Interested in the law behind the headlines — and why it matters to all of us.</p>
-            <div style="display:flex;gap:0.5rem;margin-top:0.6rem;justify-content:center;flex-wrap:wrap;">
-              <a href="https://instagram.com/theloreofthelaw" target="_blank" style="font-family:var(--sans);font-size:0.62rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;color:white;background:var(--red);padding:0.35em 0.8em;border-radius:20px;">@ Instagram</a>
-              <a href="mailto:theloreoflaw@gmail.com" style="font-family:var(--sans);font-size:0.62rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;color:var(--ink);background:var(--butter2);padding:0.35em 0.8em;border-radius:20px;border:1.5px solid var(--ink-faint);">✉ Email</a>
-            </div>
-          </div>
-        </div>
+      <div>
+        <h3 class="sidebar-block-title">Author</h3>
+        <div class="about-avatar">P</div>
+        <p class="about-name">Poppy McGill</p>
+        <p class="about-bio">Reading law at the University of Exeter. Investigating systemic legal realities hiding directly behind daily global headlines.</p>
+        <a href="https://instagram.com/theloreofthelaw" target="_blank" class="social-link">Dispatches via Instagram →</a>
       </div>
-      <div class="sidebar-card">
-        <div class="sidebar-card-header">Topics</div>
-        <div class="sidebar-card-body"><div class="topic-pills" id="topic-pills"></div></div>
-      </div>
-      <div class="sidebar-card">
-        <div class="sidebar-card-header">Recent posts</div>
-        <div class="sidebar-card-body"><div class="recent-items" id="recent-items"></div></div>
+      <div>
+        <h3 class="sidebar-block-title">Chronological Index</h3>
+        <div class="recent-items" id="recent-items"></div>
       </div>
     </aside>
   </div>
@@ -208,28 +442,23 @@
 
 <div id="view-post">
   <div class="post-view-inner">
-    <button class="back-btn" onclick="showHome()">← All posts</button>
-    <p class="post-full-category" id="pf-cat"></p>
+    <button class="back-btn" onclick="showHome()">← Return to Index</button>
+    <p class="post-category" id="pf-cat"></p>
     <h1 class="post-full-title" id="pf-title"></h1>
     <p class="post-full-meta" id="pf-meta"></p>
-    <div class="post-rule"></div>
     <div class="post-body" id="pf-body"></div>
   </div>
 </div>
 
-<div class="checker-stripe"></div>
 <footer class="site-footer">
   <p>The Lore of Law</p>
-  <span>by Poppy McGill · © 2026</span>
-  <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.8rem;">
-    <a href="https://instagram.com/theloreofthelaw" target="_blank" style="font-family:var(--sans);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;">Instagram</a>
-    <a href="mailto:theloreoflaw@gmail.com" style="font-family:var(--sans);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;">Email</a>
-  </div>
+  <span>© 2026 · Built with discipline</span>
 </footer>
 
 <script>
-  const posts = [{ id:6, title:"Reality TV, Real Consequences: The Legal Issues Behind MAFS UK", category:"Law", date:"28 May 2026", featured:true, img:"mafs-wedding.jpg", excerpt:"Behind the MAFS UK scandal lies a serious legal story — what does duty of care and consent law actually say about what happened?", body:`<p>The fallout from Channel 4's <em>Married at First Sight UK</em> has dominated headlines this week — but behind the drama lies a serious legal story. Two former cast members have alleged they were raped by their on-screen partners, episodes have been pulled from streaming, and a major sponsor has walked away. Former crew members are now speaking out about a production culture they describe as "toxic from the top down." So what does the law actually say about all of this?</p><h2>Duty of Care — What Is It?</h2><p>The phrase "duty of care" gets thrown around a lot, but it has a precise legal meaning. In tort law, a duty of care arises where one party is in a position of responsibility over another and it is reasonably foreseeable that careless conduct could cause harm. The landmark case is <em>Donoghue v Stevenson</em> [1932], where Lord Atkin established the "neighbour principle" — you must take reasonable care to avoid acts or omissions that you could reasonably foresee would injure people closely affected by your conduct.</p><p>In the context of MAFS UK, the production company CPL sits in a clear position of power over its contestants. It controls their environment, controls who they are paired with, controls access to alcohol, and profits from their emotional vulnerability. That is precisely the kind of relationship where a duty of care arises. Former workers allege that cast members were plied with alcohol at dinner parties and that producers deliberately manufactured confrontations. If true, that is not just bad ethics — it is potentially a breach of that duty.</p><h2>Consent and Sexual Autonomy</h2><p>The consent issues raised are even more serious. Two former cast members have alleged rape by their on-screen partners — allegations that are denied. But the wider picture painted by crew members is troubling in its own right. Senior producers allegedly told staff "we want them to sleep together," and bets were reportedly placed on which couples would have sex first.</p><p>Consent in law requires that it be freely given, informed, and capable of being withdrawn at any time. The Sexual Offences Act 2003 makes clear that consent obtained through pressure, manipulation, or a climate of coercion is no consent at all. While the production company is not directly accused of the alleged assaults, the question of whether the environment they created made genuine free consent harder to exercise is a legitimate legal and ethical one. Placing contestants in an isolated, controlled setting — under camera, under social pressure, paired with a stranger — raises real questions about whether the conditions for meaningful consent were ever properly protected.</p><h2>Why This Matters</h2><p>CPL's lawyers argue that welfare procedures were followed and that contributors were not pressured. Channel 4 has commissioned an external review. But the law does not just ask whether rules were technically followed — it asks whether reasonable care was taken in practice.</p><p>Reality TV has long pushed the boundaries of what is acceptable in pursuit of entertainment. MAFS UK suggests those boundaries may have been crossed entirely. When the cameras roll, the law does not switch off.</p>` },
-    { id:1, title:"Proportionality & Irrationality: Case & Reading Grids", category:"Law", date:"9 Mar 2026", featured:true, excerpt:"Two of the most important grounds of judicial review explained plainly — what they mean, when they apply, and why the distinction matters.", body:`<p>Judicial review is one of the most powerful tools in public law — it's how courts hold the government to account. Two of its most important grounds are <strong>irrationality</strong> and <strong>proportionality</strong>.</p><h2>Irrationality (Wednesbury Unreasonableness)</h2><p>The classic test comes from <strong>Associated Provincial Picture Houses Ltd v Wednesbury Corporation [1948]</strong>. Lord Greene MR said a decision will be unlawful if it is so unreasonable that no reasonable authority could ever have come to it.</p><h3>Key Cases</h3><table><tr><th>Case</th><th>What it decided</th></tr><tr><td><em>Wednesbury</em> [1948]</td><td>"So unreasonable no reasonable authority could reach it"</td></tr><tr><td><em>CCSU v Minister</em> [1985]</td><td>Reformulated as "irrationality" — decision must be outrageous</td></tr><tr><td><em>R v SS ex p Brind</em> [1991]</td><td>High threshold confirmed</td></tr></table><div class="callout"><strong>Plain English version</strong>The court isn't asking "do we agree?" It's asking "could any reasonable person have made this decision?" The bar is deliberately very high.</div><h2>Proportionality</h2><p>Proportionality is stricter — imported from EU and human rights law. It asks whether a decision was the <em>least restrictive means</em> of achieving a legitimate aim.</p><h3>The Four-Stage Test (Bank Mellat [2013])</h3><ol><li><strong>Legitimate aim</strong> — is the objective important enough?</li><li><strong>Rational connection</strong> — does the measure achieve the aim?</li><li><strong>Necessity</strong> — could something less restrictive have worked?</li><li><strong>Fair balance</strong> — do the benefits outweigh the harm?</li></ol>` },
+  const posts = [
+    { id:6, title:"Reality TV, Real Consequences: The Legal Issues Behind MAFS UK", category:"Law", date:"28 May 2026", featured:true, img:"mafs-wedding.jpg", excerpt:"Behind the MAFS UK scandal lies a serious legal story — what does duty of care and consent law actually say about what happened?", body:`<p>The fallout from Channel 4's <em>Married at First Sight UK</em> has dominated headlines this week — but behind the drama lies a serious legal story. Two former cast members have alleged they were raped by their on-screen partners, episodes have been pulled from streaming, and a major sponsor has walked away. Former crew members are now speaking out about a production culture they describe as "toxic from the top down." So what does the law actually say about all of this?</p><h2>Duty of Care — What Is It?</h2><p>The phrase "duty of care" gets thrown around a lot, but it has a precise legal meaning. In tort law, a duty of care arises where one party is in a position of responsibility over another and it is reasonably foreseeable that careless conduct could cause harm. The landmark case is <em>Donoghue v Stevenson</em> [1932], where Lord Atkin established the "neighbour principle" — you must take reasonable care to avoid acts or omissions that you could reasonably foresee would injure people closely affected by your conduct.</p><p>In the context of MAFS UK, the production company CPL sits in a clear position of power over its contestants. It controls their environment, controls who they are paired with, controls access to alcohol, and profits from their emotional vulnerability. That is precisely the kind of relationship where a duty of care arises. Former workers allege that cast members were plied with alcohol at dinner parties and that producers deliberately manufactured confrontations. If true, that is not just bad ethics — it is potentially a breach of that duty.</p><h2>Consent and Sexual Autonomy</h2><p>The consent issues raised are even more serious. Two former cast members have alleged rape by their on-screen partners — allegations that are denied. But the wider picture painted by crew members is troubling in its own right. Senior producers allegedly told staff "we want them to sleep together," and bets were reportedly placed on which couples would have sex first.</p><p>Consent in law requires that it be freely given, informed, and capable of being withdrawn at any time. The Sexual Offences Act 2003 makes clear that consent obtained through pressure, manipulation, or a climate of coercion is no consent at all. While the production company is not directly accused of the alleged assaults, the question of whether the environment they created made genuine free consent harder to exercise is a legitimate legal and ethical one. Placing contestants in an isolated, controlled setting — under camera, under social pressure, paired with a stranger — raises real questions about whether the conditions for meaningful consent were ever properly protected.</p><h2>Why This Matters</h2><p>CPL's lawyers argue that welfare procedures were followed and that contributors were not pressured. Channel 4 has commissioned an external review. But the law does not just ask whether rules were technically followed — it asks whether reasonable care was taken in practice.</p><p>Reality TV has long pushed the boundaries of what is acceptable in pursuit of entertainment. MAFS UK suggests those boundaries may have been crossed entirely. When the cameras roll, the law does not switch off.</p>` },
+    { id:1, title:"Proportionality & Irrationality: Case & Reading Grids", category:"Law", date:"9 Mar 2026", featured:false, excerpt:"Two of the most important grounds of judicial review explained plainly — what they mean, when they apply, and why the distinction matters.", body:`<p>Judicial review is one of the most powerful tools in public law — it's how courts hold the government to account. Two of its most important grounds are <strong>irrationality</strong> and <strong>proportionality</strong>.</p><h2>Irrationality (Wednesbury Unreasonableness)</h2><p>The classic test comes from <strong>Associated Provincial Picture Houses Ltd v Wednesbury Corporation [1948]</strong>. Lord Greene MR said a decision will be unlawful if it is so unreasonable that no reasonable authority could ever have come to it.</p><h3>Key Cases</h3><table><tr><th>Case</th><th>What it decided</th></tr><tr><td><em>Wednesbury</em> [1948]</td><td>"So unreasonable no reasonable authority could reach it"</td></tr><tr><td><em>CCSU v Minister</em> [1985]</td><td>Reformulated as "irrationality" — decision must be outrageous</td></tr><tr><td><em>R v SS ex p Brind</em> [1991]</td><td>High threshold confirmed</td></tr></table><div class="callout"><strong>Plain English version</strong>The court isn't asking "do we agree?" It's asking "could any reasonable person have made this decision?" The bar is deliberately very high.</div><h2>Proportionality</h2><p>Proportionality is stricter — imported from EU and human rights law. It asks whether a decision was the <em>least restrictive means</em> of achieving a legitimate aim.</p><h3>The Four-Stage Test (Bank Mellat [2013])</h3><ol><li><strong>Legitimate aim</strong> — is the objective important enough?</li><li><strong>Rational connection</strong> — does the measure achieve the aim?</li><li><strong>Necessity</strong> — could something less restrictive have worked?</li><li><strong>Fair balance</strong> — do the benefits outweigh the harm?</li></ol>` },
     { id:2, title:"What Actually Happens When You Sue Someone", category:"Law", date:"8 Mar 2026", featured:false, excerpt:"Most people think lawsuits are like they are on TV. The reality is slower, more expensive, and far more interesting.", body:`<p>Coming soon.</p>` },
     { id:3, title:"The Cost of Living Crisis, Explained", category:"Economics", date:"7 Mar 2026", featured:false, excerpt:"Inflation, interest rates, energy prices — what's actually going on and who is really to blame.", body:`<p>Coming soon.</p>` },
     { id:4, title:"Is the UK Constitution Broken?", category:"Politics", date:"5 Mar 2026", featured:false, excerpt:"We're one of the few countries without a written constitution. Some say that's a strength. Others say it's how governments get away with things.", body:`<p>Coming soon.</p>` },
@@ -238,23 +467,15 @@
 
   function renderHome(filter) {
     const filtered = filter ? posts.filter(p => p.category === filter) : posts;
-    
-    // Dynamically choose a featured post for the category if one exists, fallback to first item
     const featured = filtered.find(p => p.featured) || filtered[0];
     const rest = featured ? filtered.filter(p => p.id !== featured.id) : filtered;
 
-    // Render Featured Post Area safely
     const fs = document.getElementById('featured-section');
     if (featured) {
       const bgImgStyle = featured.img ? `background-image:url('${featured.img}');background-size:cover;background-position:center;` : '';
-      const checkerOpacity = featured.img ? 'opacity:0.15;' : '';
-      
       fs.innerHTML = `
-        <div class="featured-post anim d1" onclick="openPost(${featured.id})">
-          <div class="featured-thumb" style="${bgImgStyle}">
-            <div class="featured-thumb-checker" style="${checkerOpacity}"></div>
-            <span class="featured-badge">Featured</span>
-          </div>
+        <div class="featured-post" onclick="openPost(${featured.id})">
+          <div class="featured-thumb" style="${bgImgStyle}"></div>
           <div class="featured-content">
             <p class="post-category">${featured.category}</p>
             <h2 class="featured-title">${featured.title}</h2>
@@ -266,12 +487,11 @@
       fs.innerHTML = '';
     }
 
-    // Render Grid
     const grid = document.getElementById('posts-grid');
     grid.innerHTML = '';
-    rest.forEach((p, i) => {
+    rest.forEach(p => {
       const el = document.createElement('div');
-      el.className = `post-card anim d${(i%4)+2}`;
+      el.className = 'post-card';
       el.innerHTML = `
         <p class="post-category">${p.category}</p>
         <h3 class="post-card-title">${p.title}</h3>
@@ -282,29 +502,21 @@
       grid.appendChild(el);
     });
 
-    // Update Layout Text Label
-    document.getElementById('section-label').textContent = filter ? `${filter} posts` : 'Latest posts';
+    document.getElementById('section-label').textContent = filter ? `${filter} Index` : 'Latest Briefings';
 
-    // Render Static Sidebar Areas
     const ri = document.getElementById('recent-items');
-    if (ri) ri.innerHTML = posts.slice(0,4).map(p => `<div class="recent-item" onclick="openPost(${p.id})"><p class="recent-title">${p.title}</p><p class="recent-date">${p.date}</p></div>`).join('');
-    
-    const tp = document.getElementById('topic-pills');
-    if (tp) tp.innerHTML = [...new Set(posts.map(p => p.category))].map(c => `<span class="topic-pill" onclick="filterPosts('${c}')">${c}</span>`).join('');
+    if (ri) ri.innerHTML = posts.slice(0, 4).map(p => `
+      <div class="recent-item" onclick="openPost(${p.id})">
+        <p class="recent-title">${p.title}</p>
+        <p class="recent-date">${p.date}</p>
+      </div>`).join('');
 
-    // Synchronize Menu Bars and Hero Button highlights simultaneously
     document.querySelectorAll('.site-nav a').forEach(a => a.classList.remove('active'));
-    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-    
     if (!filter) {
       document.getElementById('nav-all').classList.add('active');
-      document.querySelector('.filter-pill[data-cat="all"]').classList.add('active');
     } else {
       const navMap = {'Law':'nav-law','Politics':'nav-politics','Economics':'nav-economics','Current Affairs':'nav-current'};
       if (navMap[filter]) document.getElementById(navMap[filter]).classList.add('active');
-      
-      const pillBtn = document.querySelector(`.filter-pill[data-cat="${filter}"]`);
-      if (pillBtn) pillBtn.classList.add('active');
     }
   }
 
@@ -317,22 +529,20 @@
     if (!post) return;
     document.getElementById('pf-cat').textContent = post.category;
     document.getElementById('pf-title').textContent = post.title;
-    document.getElementById('pf-meta').textContent = post.date;
+    document.getElementById('pf-meta').textContent = `Published on ${post.date} · Authored by Poppy McGill`;
     document.getElementById('pf-body').innerHTML = post.body;
     document.getElementById('view-home').style.display = 'none';
-    const pv = document.getElementById('view-post');
-    pv.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('view-post').style.display = 'block';
+    window.scrollTo({ top: 0 });
   }
 
   function showHome() {
     document.getElementById('view-post').style.display = 'none';
     document.getElementById('view-home').style.display = 'block';
     renderHome(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   }
 
-  // Initial Run
   renderHome(null);
 </script>
 </body>
