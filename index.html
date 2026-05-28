@@ -157,11 +157,11 @@
         <h1 class="hero-title">The Lore<strong>of Law.</strong></h1>
         <p class="hero-desc">The stories, context and ideas behind the law — and how it connects to politics, economics and everyday life. No jargon. No academic snobbery. Just good thinking.</p>
         <div class="hero-filters">
-          <button class="filter-pill active" onclick="filterPosts(null)">All posts</button>
-          <button class="filter-pill" onclick="filterPosts('Law')">Law</button>
-          <button class="filter-pill" onclick="filterPosts('Politics')">Politics</button>
-          <button class="filter-pill" onclick="filterPosts('Economics')">Economics</button>
-          <button class="filter-pill" onclick="filterPosts('Current Affairs')">Current Affairs</button>
+          <button class="filter-pill active" data-cat="all" onclick="filterPosts(null)">All posts</button>
+          <button class="filter-pill" data-cat="Law" onclick="filterPosts('Law')">Law</button>
+          <button class="filter-pill" data-cat="Politics" onclick="filterPosts('Politics')">Politics</button>
+          <button class="filter-pill" data-cat="Economics" onclick="filterPosts('Economics')">Economics</button>
+          <button class="filter-pill" data-cat="Current Affairs" onclick="filterPosts('Current Affairs')">Current Affairs</button>
         </div>
       </div>
       <div class="hero-deco">
@@ -238,36 +238,77 @@
 
   function renderHome(filter) {
     const filtered = filter ? posts.filter(p => p.category === filter) : posts;
-    const featured = !filter ? filtered.find(p => p.featured) : null;
-    const rest = featured ? filtered.filter(p => !p.featured) : filtered;
+    
+    // Dynamically choose a featured post for the category if one exists, fallback to first item
+    const featured = filtered.find(p => p.featured) || filtered[0];
+    const rest = featured ? filtered.filter(p => p.id !== featured.id) : filtered;
 
+    // Render Featured Post Area safely
     const fs = document.getElementById('featured-section');
-    fs.innerHTML = featured ? `<div class="featured-post anim d1" onclick="openPost(${featured.id})"><div class="featured-thumb" style="${featured.img ? `background-image:url('${featured.img}');background-size:cover;background-position:center;` : ''}"><div class="featured-thumb-checker" style="${featured.img ? 'opacity:0.15;' : ''}"></div><span class="featured-badge">Featured</span></div><div class="featured-content"><p class="post-category">${featured.category}</p><h2 class="featured-title">${featured.title}</h2><p class="featured-excerpt">${featured.excerpt}</p><p class="post-date">${featured.date}</p></div></div>` : '';
+    if (featured) {
+      const bgImgStyle = featured.img ? `background-image:url('${featured.img}');background-size:cover;background-position:center;` : '';
+      const checkerOpacity = featured.img ? 'opacity:0.15;' : '';
+      
+      fs.innerHTML = `
+        <div class="featured-post anim d1" onclick="openPost(${featured.id})">
+          <div class="featured-thumb" style="${bgImgStyle}">
+            <div class="featured-thumb-checker" style="${checkerOpacity}"></div>
+            <span class="featured-badge">Featured</span>
+          </div>
+          <div class="featured-content">
+            <p class="post-category">${featured.category}</p>
+            <h2 class="featured-title">${featured.title}</h2>
+            <p class="featured-excerpt">${featured.excerpt}</p>
+            <p class="post-date">${featured.date}</p>
+          </div>
+        </div>`;
+    } else {
+      fs.innerHTML = '';
+    }
+
+    // Render Grid
     const grid = document.getElementById('posts-grid');
     grid.innerHTML = '';
     rest.forEach((p, i) => {
       const el = document.createElement('div');
       el.className = `post-card anim d${(i%4)+2}`;
-      el.innerHTML = `<p class="post-category">${p.category}</p><h3 class="post-card-title">${p.title}</h3><p class="post-card-excerpt">${p.excerpt}</p><p class="post-date">${p.date}</p>`;
+      el.innerHTML = `
+        <p class="post-category">${p.category}</p>
+        <h3 class="post-card-title">${p.title}</h3>
+        <p class="post-card-excerpt">${p.excerpt}</p>
+        <p class="post-date">${p.date}</p>
+      `;
       el.onclick = () => openPost(p.id);
       grid.appendChild(el);
     });
 
+    // Update Layout Text Label
     document.getElementById('section-label').textContent = filter ? `${filter} posts` : 'Latest posts';
 
+    // Render Static Sidebar Areas
     const ri = document.getElementById('recent-items');
     if (ri) ri.innerHTML = posts.slice(0,4).map(p => `<div class="recent-item" onclick="openPost(${p.id})"><p class="recent-title">${p.title}</p><p class="recent-date">${p.date}</p></div>`).join('');
+    
     const tp = document.getElementById('topic-pills');
     if (tp) tp.innerHTML = [...new Set(posts.map(p => p.category))].map(c => `<span class="topic-pill" onclick="filterPosts('${c}')">${c}</span>`).join('');
 
+    // Synchronize Menu Bars and Hero Button highlights simultaneously
     document.querySelectorAll('.site-nav a').forEach(a => a.classList.remove('active'));
-    document.getElementById('nav-all').classList.toggle('active', !filter);
-    const navMap = {'Law':'nav-law','Politics':'nav-politics','Economics':'nav-economics','Current Affairs':'nav-current'};
-    if (filter && navMap[filter]) document.getElementById(navMap[filter]).classList.add('active');
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    
+    if (!filter) {
+      document.getElementById('nav-all').classList.add('active');
+      document.querySelector('.filter-pill[data-cat="all"]').classList.add('active');
+    } else {
+      const navMap = {'Law':'nav-law','Politics':'nav-politics','Economics':'nav-economics','Current Affairs':'nav-current'};
+      if (navMap[filter]) document.getElementById(navMap[filter]).classList.add('active');
+      
+      const pillBtn = document.querySelector(`.filter-pill[data-cat="${filter}"]`);
+      if (pillBtn) pillBtn.classList.add('active');
+    }
   }
 
   function filterPosts(cat) {
-    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
     renderHome(cat);
   }
 
@@ -291,6 +332,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Initial Run
   renderHome(null);
 </script>
 </body>
