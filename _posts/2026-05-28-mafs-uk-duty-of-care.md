@@ -3,6 +3,7 @@ layout: post
 title: "Reality TV, Real Consequences: The Legal Issues Behind MAFS UK"
 date: 2026-05-28
 categories: law
+{ id:6, title:"Reality TV, Real Consequences...", category:"Law", date:"28 May 2026", featured:true, img:"mafs-wedding.jpg", excerpt:...
 ---
 
 The fallout from Channel 4's *Married at First Sight UK* has dominated headlines this week, but behind the drama lies a serious legal story. Two former cast members have alleged they were raped by their on-screen partners, episodes have been pulled from streaming, and a major sponsor has walked away. Former crew members are now speaking out about a production culture they describe as "toxic from the top down." So what does the law actually say about all of this?
